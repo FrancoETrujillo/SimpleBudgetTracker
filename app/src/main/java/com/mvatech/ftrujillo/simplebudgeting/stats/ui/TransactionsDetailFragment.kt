@@ -1,4 +1,4 @@
-package com.mvatech.ftrujillo.simplebudgeting.ui
+package com.mvatech.ftrujillo.simplebudgeting.stats.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,27 +7,27 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.mvatech.ftrujillo.simplebudgeting.R
-import com.mvatech.ftrujillo.simplebudgeting.view_model.StatsViewModel
+import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.TransactionsDetailViewModel
 
 
-class StatsFragment : Fragment() {
+class TransactionsDetailFragment : Fragment() {
 
     companion object {
-        fun newInstance() = StatsFragment()
+        fun newInstance() = TransactionsDetailFragment()
     }
 
-    private lateinit var viewModel: StatsViewModel
+    private lateinit var viewModel: TransactionsDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.stats_fragment, container, false)
+        return inflater.inflate(R.layout.transactions_detail_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(StatsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(TransactionsDetailViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

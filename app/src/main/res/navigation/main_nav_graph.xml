@@ -5,13 +5,13 @@
             app:startDestination="@id/addTransactionFragment">
 
     <fragment android:id="@+id/addTransactionFragment"
-              android:name="com.mvatech.ftrujillo.simplebudgeting.ui.NewTransactionFragment"
+              android:name="com.mvatech.ftrujillo.simplebudgeting.new_transaction.ui.NewTransactionFragment"
               android:label="new_transaction_fragment" tools:layout="@layout/new_transaction_fragment"/>
 
-    <fragment android:id="@+id/statsFragment" android:name="com.mvatech.ftrujillo.simplebudgeting.ui.StatsFragment"
+    <fragment android:id="@+id/statsFragment" android:name="com.mvatech.ftrujillo.simplebudgeting.stats.ui.StatsFragment"
               android:label="stats_fragment" tools:layout="@layout/stats_fragment"/>
 
     <fragment android:id="@+id/settingsFragment"
-              android:name="com.mvatech.ftrujillo.simplebudgeting.ui.SettingsFragment"
+              android:name="com.mvatech.ftrujillo.simplebudgeting.settings.SettingsFragment"
               android:label="SettingsFragment"/>
 </navigation>

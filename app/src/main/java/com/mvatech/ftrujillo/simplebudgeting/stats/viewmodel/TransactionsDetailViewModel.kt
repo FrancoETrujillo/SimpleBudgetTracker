@@ -1,4 +1,4 @@
-package com.mvatech.ftrujillo.simplebudgeting.view_model
+package com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel
 
 import androidx.lifecycle.ViewModel
 

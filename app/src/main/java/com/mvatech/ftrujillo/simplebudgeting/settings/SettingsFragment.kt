@@ -1,4 +1,4 @@
-package com.mvatech.ftrujillo.simplebudgeting.ui
+package com.mvatech.ftrujillo.simplebudgeting.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
