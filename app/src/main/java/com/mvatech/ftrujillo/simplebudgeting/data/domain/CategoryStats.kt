@@ -1,4 +1,4 @@
-package com.mvatech.ftrujillo.simplebudgeting.data
+package com.mvatech.ftrujillo.simplebudgeting.data.domain
 
 import java.math.BigDecimal
 

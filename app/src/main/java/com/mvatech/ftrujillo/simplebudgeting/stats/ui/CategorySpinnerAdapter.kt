@@ -1,7 +1,6 @@
 package com.mvatech.ftrujillo.simplebudgeting.stats.ui
 
 import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.mvatech.ftrujillo.simplebudgeting.R
-import com.mvatech.ftrujillo.simplebudgeting.data.Category
+import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 
 class CategorySpinnerAdapter(context: Context, categoryList: List<Category>): ArrayAdapter<Category>(context, 0, categoryList){
 

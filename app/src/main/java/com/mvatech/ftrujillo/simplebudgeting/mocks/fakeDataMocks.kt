@@ -1,9 +1,7 @@
 package com.mvatech.ftrujillo.simplebudgeting.mocks
 
 import android.graphics.Color
-import com.mvatech.ftrujillo.simplebudgeting.data.Category
-import com.mvatech.ftrujillo.simplebudgeting.data.CategoryStats
-import java.math.BigDecimal
+import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 
 fun getMockedCategoryList(): List<Category>{
     val categoryList = mutableListOf<Category>()

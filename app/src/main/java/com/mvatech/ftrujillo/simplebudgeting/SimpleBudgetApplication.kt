@@ -1,6 +1,7 @@
 package com.mvatech.ftrujillo.simplebudgeting
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.mvatech.ftrujillo.simplebudgeting.utils.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -17,5 +18,6 @@ class SimpleBudgetApplication:Application(){
             // declare modules
             modules(appModule)
         }
+        AndroidThreeTen.init(this)
     }
 }

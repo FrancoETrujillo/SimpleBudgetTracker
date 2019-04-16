@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,9 +13,8 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.mvatech.ftrujillo.simplebudgeting.R
-import com.mvatech.ftrujillo.simplebudgeting.data.CategoryStats
+import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
 import kotlinx.android.synthetic.main.stats_fragment.*
-import java.math.BigDecimal
 
 
 class StatsFragment : Fragment() {

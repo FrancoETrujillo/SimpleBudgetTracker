@@ -1,4 +1,4 @@
-package com.mvatech.ftrujillo.simplebudgeting.data
+package com.mvatech.ftrujillo.simplebudgeting.data.domain
 
 data class Category(
     val name:String,

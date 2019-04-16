@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mvatech.ftrujillo.simplebudgeting.DiffUtilImpl
 import com.mvatech.ftrujillo.simplebudgeting.R
-import com.mvatech.ftrujillo.simplebudgeting.data.CategoryStats
-import timber.log.Timber
+import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
 
 class CategoriesListAdapter(private val categoryStats: MutableList<CategoryStats>) : RecyclerView.Adapter<CategoriesListAdapter.Holder>() {
 
