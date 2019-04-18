@@ -4,6 +4,7 @@ import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.mvatech.ftrujillo.simplebudgeting.utils.appModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.logger.AndroidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
@@ -13,6 +14,8 @@ class SimpleBudgetApplication:Application(){
         super.onCreate()
         if(BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
         startKoin {
+            AndroidLogger()
+
             // declare used Android context
             androidContext(this@SimpleBudgetApplication)
             // declare modules

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.StatsViewModel
@@ -14,18 +15,18 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
+import com.mvatech.ftrujillo.simplebudgeting.new_transaction.viewmodel.NewTransactionViewModel
 import kotlinx.android.synthetic.main.stats_fragment.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class StatsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = StatsFragment()
         val categoryStats = mutableListOf<CategoryStats>()
-
     }
 
-    private lateinit var viewModel: StatsViewModel
+    private val viewModel by viewModel<StatsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +37,6 @@ class StatsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(StatsViewModel::class.java)
-
 
         val chart = statsPieChart
 
@@ -61,7 +60,11 @@ class StatsFragment : Fragment() {
         val data = PieData(set)
         chart.data = data
 
-//        chart.invalidate() // refresh
+        viewModel.statsList.observe(viewLifecycleOwner, Observer {
+            categoryStats.clear()
+            categoryStats.addAll(it)
+        })
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

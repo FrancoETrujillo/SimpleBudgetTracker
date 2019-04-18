@@ -6,9 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.Transaction
 import com.mvatech.ftrujillo.simplebudgeting.data.repository.Repository
-import com.mvatech.ftrujillo.simplebudgeting.mocks.getMockedCategoryList
-import com.mvatech.ftrujillo.simplebudgeting.mocks.getMockedCurrentGoal
-import com.mvatech.ftrujillo.simplebudgeting.mocks.getMockedCurrentRemaining
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,10 +41,6 @@ class NewTransactionViewModel(private val repository: Repository) : ViewModel() 
         GlobalScope.launch(Dispatchers.IO) {
             repository.saveNewTransaction(transaction)
         }
-    }
-
-    fun sync(){
-
     }
 
 }

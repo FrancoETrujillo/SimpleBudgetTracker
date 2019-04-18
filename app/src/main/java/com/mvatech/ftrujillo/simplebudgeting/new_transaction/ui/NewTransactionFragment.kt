@@ -14,8 +14,9 @@ import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 import com.mvatech.ftrujillo.simplebudgeting.mocks.getMockedCategoryList
 import com.mvatech.ftrujillo.simplebudgeting.new_transaction.viewmodel.NewTransactionViewModel
 import com.mvatech.ftrujillo.simplebudgeting.stats.ui.CategorySpinnerAdapter
+import com.mvatech.ftrujillo.simplebudgeting.utils.toast
 import kotlinx.android.synthetic.main.new_transaction_fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -98,7 +99,12 @@ class NewTransactionFragment : Fragment() {
         val category = categorySpinner.selectedItem as Category
         val title = titleEditText.text.toString()
         val titleChecked = if(titleCheckBox.isChecked) "Untitled" else title
-        viewModel.saveNewTransaction(cost,category,date,titleChecked)
+        if(cost.toFloat() != 0f){
+            "Saved".toast(this.context)
+            viewModel.saveNewTransaction(cost,category,date,titleChecked)
+        } else{
+            "We cannot save a value 0".toast(this.context)
+        }
     }
 
     private val onDateEditTextFocusChangedListener = View.OnFocusChangeListener {_, hasFocus: Boolean ->
