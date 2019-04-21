@@ -15,11 +15,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setSupportActionBar(toolbar)
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         bottomNav.setupWithNavController(navController)
-        NavigationUI.setupActionBarWithNavController(this, navController)
         Timber.d("Franco")
 
     }

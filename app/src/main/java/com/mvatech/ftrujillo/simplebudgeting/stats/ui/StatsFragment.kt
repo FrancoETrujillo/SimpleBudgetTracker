@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.StatsViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -38,48 +39,33 @@ class StatsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val chart = statsPieChart
 
-        val colors = ArrayList<Int>()
-
-        colors.add(Color.GREEN)
-        colors.add(Color.YELLOW)
-        colors.add(Color.RED)
-        colors.add(Color.BLUE)
-
-        val entries = ArrayList<PieEntry>()
-
-        entries.add(PieEntry(18.5f, "Green"))
-        entries.add(PieEntry(26.7f, "Yellow"))
-        entries.add(PieEntry(24.0f, "Red"))
-        entries.add(PieEntry(30.8f, "Blue"))
-
-        val set = PieDataSet(entries,"")
-        set.setColors(colors)
-
-        val data = PieData(set)
-        chart.data = data
-
-        viewModel.statsList.observe(viewLifecycleOwner, Observer {
-            categoryStats.clear()
-            categoryStats.addAll(it)
-        })
+        viewModel.statsList.observe(viewLifecycleOwner, Observer(this::statsListChanged))
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bindCategoryList()
 
     }
     private fun bindCategoryList() {
-
-
         categoryStatsRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = CategoriesListAdapter(categoryStats)
         }
     }
 
+    private fun statsListChanged(list :List<CategoryStats>) {
+        categoryStats.clear()
+        categoryStats.addAll(list)
+        updatePieChart(list)
+    }
+
+    private fun updatePieChart(list: List<CategoryStats>) {
+        val chart = statsPieChart
+        chart.data = viewModel.generatePieChartData(list)
+        chart.description.text = ""
+        chart.centerText = "$${viewModel.currentSpent} / $${viewModel.currentGoal}"
+    }
 }

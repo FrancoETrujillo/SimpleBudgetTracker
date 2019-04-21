@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginBottom="5dp"
@@ -35,16 +35,29 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.6"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/categoryColor"/>
         <TextView
                 android:id="@+id/categoryName"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/category_name"
+                app:layout_constraintStart_toEndOf="@+id/totalSpent"
+                android:layout_marginStart="8dp"
                 app:layout_constraintTop_toTopOf="@+id/totalSpent"
-                app:layout_constraintBottom_toBottomOf="@+id/totalSpent"
-                app:layout_constraintStart_toEndOf="@+id/categoryColor" android:layout_marginStart="16dp"/>
+                app:layout_constraintBottom_toBottomOf="@+id/totalSpent"/>
+        <TextView
+                android:hint="@string/date"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                app:layout_constraintTop_toTopOf="@+id/categoryName"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

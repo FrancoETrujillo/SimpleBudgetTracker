@@ -1,7 +1,8 @@
 package com.mvatech.ftrujillo.simplebudgeting.utils
 
 import com.mvatech.ftrujillo.simplebudgeting.data.db.SimpleBudgetDatabase
-import com.mvatech.ftrujillo.simplebudgeting.data.db.TransactionDao
+import com.mvatech.ftrujillo.simplebudgeting.data.providers.PreferencesProvider
+import com.mvatech.ftrujillo.simplebudgeting.data.providers.PreferencesProviderImpl
 import com.mvatech.ftrujillo.simplebudgeting.data.repository.Repository
 import com.mvatech.ftrujillo.simplebudgeting.data.repository.RepositoryImpl
 import com.mvatech.ftrujillo.simplebudgeting.new_transaction.viewmodel.NewTransactionViewModel
@@ -16,6 +17,8 @@ val appModule = module {
     viewModel { StatsViewModel(get()) }
     single { SimpleBudgetDatabase(get())}
     single { get<SimpleBudgetDatabase>().transactionDao }
-
-    single<Repository> {RepositoryImpl(get())}
+    single { get<SimpleBudgetDatabase>().categoriesDao }
+    single { get<SimpleBudgetDatabase>().spendingGoalDao }
+    single <PreferencesProvider>{PreferencesProviderImpl(get())  }
+    single<Repository> {RepositoryImpl(get(), get(), get(), get())}
 }

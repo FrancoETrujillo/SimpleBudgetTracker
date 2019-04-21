@@ -1,4 +1,4 @@
-package com.mvatech.ftrujillo.simplebudgeting.data.db
+package com.mvatech.ftrujillo.simplebudgeting.utils
 
 import androidx.room.TypeConverter
 import java.math.BigDecimal

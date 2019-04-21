@@ -1,4 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="Spending Goal">
+        <EditTextPreference
+                android:key="SPENDING_GOAL"
+                android:title="CurrentGoal"
+                android:summary="Select your maximum spending goal"
+                android:inputType="numberDecimal"
+                android:defaultValue="1000"
+        />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="Notifications">
+        <SwitchPreference
+                android:key="NOTIFICATION_ENABLED"
+                android:title="Notification on over spending"
+                android:summary="Send you notification when your limit is rebased"
+                android:defaultValue="true"
+                />
 
+        <SwitchPreference
+                android:key="NOTIFICATION_ON_RATIO_ENABLED"
+                android:title="Notification on percentage spent"
+                android:summary="Send you notification when a percentage of your limit is rebased"
+                android:defaultValue="true"
+                android:disableDependentsState="false"/>
+        <EditTextPreference
+                android:key="SPENT_RATIO_NOTIFICATION"
+                android:title="Percentage notification"
+                android:summary="Which percentage would trigger a notification"
+                android:defaultValue="75"
+                android:dependency="NOTIFICATION_ON_RATIO_ENABLED"/>
+
+        <SwitchPreference
+                android:key="NOTIFICATION_PLANNING_ENABLED"
+                android:title="Notification to change your current limit"
+                android:summary="Send you notification when the month period finishes"
+                android:defaultValue="true"
+                android:disableDependentsState="false"/>
+        <ListPreference
+                android:key="PLANING_NOTIFICATION_SELECTION"
+                android:title="Planing for new period notification"
+                android:summary="%s"
+                android:defaultValue="LAST_DAY_OF_PERIOD"
+                android:entries="@array/planingNotificationEntries"
+                android:entryValues="@array/planingNotificationValues"
+                android:dependency="NOTIFICATION_PLANNING_ENABLED"/>
+    </PreferenceCategory>
 </PreferenceScreen>

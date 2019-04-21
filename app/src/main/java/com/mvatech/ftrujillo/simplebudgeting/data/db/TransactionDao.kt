@@ -13,7 +13,7 @@ interface TransactionDao{
     @Insert
     fun insertTransaction(transaction: Transaction)
 
-    @Delete()
+    @Delete
     fun deleteTransaction(transaction: Transaction)
 
     @Query("DELETE FROM transaction_table")

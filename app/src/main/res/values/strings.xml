@@ -13,4 +13,5 @@
     <string name="spent">$ Spent</string>
     <string name="zero">0</string>
     <string name="untitled">Untitled</string>
+    <string name="spending_stats">Spending Stats</string>
 </resources>

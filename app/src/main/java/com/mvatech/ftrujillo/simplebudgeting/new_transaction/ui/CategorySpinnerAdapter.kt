@@ -1,4 +1,4 @@
-package com.mvatech.ftrujillo.simplebudgeting.stats.ui
+package com.mvatech.ftrujillo.simplebudgeting.new_transaction.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 
-class CategorySpinnerAdapter(context: Context, categoryList: List<Category>): ArrayAdapter<Category>(context, 0, categoryList){
+class CategorySpinnerAdapter(context: Context?, categoryList: List<Category>): ArrayAdapter<Category>(context, 0, categoryList){
 
     fun updateCategories(categoryList: List<Category>){
         clear()

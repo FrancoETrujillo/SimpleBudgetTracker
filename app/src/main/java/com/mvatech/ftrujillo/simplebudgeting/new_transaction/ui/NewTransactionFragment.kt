@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
+import com.mvatech.ftrujillo.simplebudgeting.data.domain.SpendingGoal
 import com.mvatech.ftrujillo.simplebudgeting.mocks.getMockedCategoryList
 import com.mvatech.ftrujillo.simplebudgeting.new_transaction.viewmodel.NewTransactionViewModel
-import com.mvatech.ftrujillo.simplebudgeting.stats.ui.CategorySpinnerAdapter
 import com.mvatech.ftrujillo.simplebudgeting.utils.toast
 import kotlinx.android.synthetic.main.new_transaction_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,6 +27,7 @@ class NewTransactionFragment : Fragment() {
     private val viewModel by viewModel<NewTransactionViewModel>()
     companion object{
         lateinit var date: LocalDateTime
+        lateinit var categorySpinnerAdapter: CategorySpinnerAdapter
     }
 
     override fun onCreateView(
@@ -51,7 +51,11 @@ class NewTransactionFragment : Fragment() {
     }
 
     private fun fillCategories() {
-        categorySpinner.adapter = this.context?.let { CategorySpinnerAdapter(it, getMockedCategoryList()) }
+        categorySpinnerAdapter = CategorySpinnerAdapter(
+            context,
+            getMockedCategoryList()
+        )
+        categorySpinner.adapter = categorySpinnerAdapter
     }
 
     private fun bindListeners() {
@@ -61,8 +65,7 @@ class NewTransactionFragment : Fragment() {
         dateEditText.onFocusChangeListener = onDateEditTextFocusChangedListener
         dateEditText.setOnClickListener(onDateEditTextClickListener)
         viewModel.categoryList.observe(viewLifecycleOwner, Observer(this::categoryListChanged))
-        viewModel.currentRemaining.observe(viewLifecycleOwner, Observer(this::currentSpentChanged))
-        viewModel.currentGoal.observe(viewLifecycleOwner, Observer(this::currentGoalChanged))
+        viewModel.currentGoalInformation.observe(viewLifecycleOwner, Observer(this::currentGoalChanged))
     }
 
     private fun launchDatePicker(){
@@ -83,15 +86,16 @@ class NewTransactionFragment : Fragment() {
     }
 
     private fun categoryListChanged(categoryList: List<Category>){
-        //category List changed
+        categorySpinnerAdapter.updateCategories(categoryList)
     }
 
-    private fun currentGoalChanged(currentGoal:Int){
-        goalStatus.maxSpeed = currentGoal.toFloat()
-    }
+    private fun currentGoalChanged(currentGoalInfo:SpendingGoal?){
+        currentGoalInfo?.let {
+            goalStatus.maxSpeed = currentGoalInfo?.currentGoal.toFloat()
+            goalStatus.setSpeedAt(currentGoalInfo?.currentRemaining.toFloat())
+        }
 
-    private fun currentSpentChanged(currentRemaining:Int){
-        goalStatus.setSpeedAt(currentRemaining.toFloat())
+
     }
 
     private val onFavButtonClick = View.OnClickListener {

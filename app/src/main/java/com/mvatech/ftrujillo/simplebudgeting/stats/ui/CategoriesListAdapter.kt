@@ -8,14 +8,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mvatech.ftrujillo.simplebudgeting.DiffUtilImpl
+import com.mvatech.ftrujillo.simplebudgeting.utils.DiffUtilImpl
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
 
 class CategoriesListAdapter(private val categoryStats: MutableList<CategoryStats>) : RecyclerView.Adapter<CategoriesListAdapter.Holder>() {
 
     fun updateList(newList:List<CategoryStats>){
-        val result = DiffUtil.calculateDiff(DiffUtilImpl(categoryStats, newList))
+        val result = DiffUtil.calculateDiff(
+            DiffUtilImpl(
+                categoryStats,
+                newList
+            )
+        )
         categoryStats.clear()
         categoryStats.addAll(newList)
         result.dispatchUpdatesTo(this)
@@ -34,9 +39,9 @@ class CategoriesListAdapter(private val categoryStats: MutableList<CategoryStats
 
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val totalSpent:TextView = itemView.findViewById(R.id.totalSpent)
-        val categoryName:TextView = itemView.findViewById(R.id.categoryName)
-        val categoryColor:ImageView = itemView.findViewById(R.id.categoryColor)
+        private val totalSpent:TextView = itemView.findViewById(R.id.totalSpent)
+        private val categoryName:TextView = itemView.findViewById(R.id.categoryName)
+        private val categoryColor:ImageView = itemView.findViewById(R.id.categoryColor)
 
 
         fun bind(stat: CategoryStats){

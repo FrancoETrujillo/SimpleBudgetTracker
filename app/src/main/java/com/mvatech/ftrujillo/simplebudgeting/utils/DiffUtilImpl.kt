@@ -1,8 +1,8 @@
-package com.mvatech.ftrujillo.simplebudgeting
+package com.mvatech.ftrujillo.simplebudgeting.utils
 
 import androidx.recyclerview.widget.DiffUtil
 
-class DiffUtilImpl<T>(val oldList: List<T>, val newList: List<T>): DiffUtil.Callback(){
+class DiffUtilImpl<T>(private val oldList: List<T>, private val newList: List<T>): DiffUtil.Callback(){
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition] == newList[newItemPosition]
     }
