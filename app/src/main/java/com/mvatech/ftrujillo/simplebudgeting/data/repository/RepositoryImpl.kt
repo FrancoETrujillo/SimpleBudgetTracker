@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDateTime
+import timber.log.Timber
 import java.math.BigDecimal
 
 class RepositoryImpl(private val transactionDao: TransactionDao,
@@ -47,7 +48,7 @@ class RepositoryImpl(private val transactionDao: TransactionDao,
         val currentGoal = preferenceProvider.getCurrentGoal()
         val initialGoal= preferenceProvider.getCurrentGoal()
         val currentSpent = preferenceProvider.getCurrentSpent()
-        val newGoalInfo =SpendingGoal(LocalDateTime.now(),currentGoal, initialGoal, currentSpent)
+        val newGoalInfo = SpendingGoal(LocalDateTime.now(),currentGoal, initialGoal, currentSpent)
         _spendingGoalInfo.postValue(newGoalInfo)
     }
 
@@ -62,6 +63,11 @@ class RepositoryImpl(private val transactionDao: TransactionDao,
     }
 
     override fun getCategoryList(): LiveData<List<Category>> {
+        Timber.d("Franco getCategory")
+
+        if(!preferenceProvider.isFirstLaunch()){
+            initializeDefaults()
+        }
         return categoriesDao.getCategoryList()
     }
 
@@ -77,6 +83,19 @@ class RepositoryImpl(private val transactionDao: TransactionDao,
 
     override fun getCurrentGoal(): BigDecimal {
         return preferenceProvider.getCurrentGoal()
+    }
+
+    private fun initializeDefaults() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val defaultCategories = preferenceProvider.getDefaultCategories()
+//            val set = HashMap<Int,Category>()
+//            defaultCategories.map { category ->
+//                set.put(category.color, category)
+//            }
+            Timber.d("Franco initializing.... %s", defaultCategories)
+            categoriesDao.insertCategoriesList(defaultCategories)
+            preferenceProvider.setFirstLaunch()
+        }
     }
 
     private fun buildCategoryStats(transactionList: List<Transaction>): List<CategoryStats>{

@@ -9,14 +9,13 @@ import timber.log.Timber
 import java.math.BigDecimal
 
 val defaultCategoriesDao =   mutableListOf<Category>().apply {
-    add(Category("Food", Color.YELLOW))
-    add(Category("Drinks", Color.RED))
-    add(Category("Bills", Color.GREEN))
-}
+    add(Category(Color.YELLOW, "Food"))
+    add(Category(Color.RED, "Drinks"))
+    add(Category(Color.GREEN, "Bills"))
+}.also {         Timber.d("Franco inside  $it id $it")}
 
 val defaultSpendingGoal:SpendingGoal = run{
     val now = LocalDateTime.ofEpochSecond(1555622303, 0, ZoneOffset.UTC)
     val beginningOfMonth = now.minusDays(now.dayOfMonth.toLong())
     SpendingGoal(beginningOfMonth, BigDecimal("500"), BigDecimal("500"),BigDecimal(350))
-}.also {         Timber.d("Franco inside  $it id ${it.id}")
-}
+}.also {         Timber.d("Franco inside  $it id ${it.id}")}

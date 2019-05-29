@@ -27,7 +27,8 @@ class StatsViewModel(private val repository: Repository) : ViewModel() {
         }
         colors.add(Color.BLACK)
 
-        entries.add(PieEntry(repository.getCurrentRemainingBlocking().toFloat().also { Timber.d("Franco remaining $it") }, "Remaining"))
+        entries.add(PieEntry(repository.getCurrentRemainingBlocking().toFloat().also {
+            Timber.d("Franco remaining $it") }, "Remaining"))
         val set = PieDataSet(entries," CATEGORIES")
         set.colors = colors
 

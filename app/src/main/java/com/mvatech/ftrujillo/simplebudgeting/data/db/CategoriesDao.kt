@@ -6,7 +6,7 @@ import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 
 @Dao
 interface CategoriesDao{
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCategory(category: Category)
 
     @Insert

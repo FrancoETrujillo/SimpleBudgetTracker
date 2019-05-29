@@ -1,22 +1,15 @@
 package com.mvatech.ftrujillo.simplebudgeting.stats.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.StatsViewModel
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
-import com.mvatech.ftrujillo.simplebudgeting.new_transaction.viewmodel.NewTransactionViewModel
+import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.StatsViewModel
 import kotlinx.android.synthetic.main.stats_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

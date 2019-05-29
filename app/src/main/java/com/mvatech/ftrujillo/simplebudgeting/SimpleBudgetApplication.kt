@@ -15,6 +15,7 @@ class SimpleBudgetApplication:Application(){
         super.onCreate()
         if(BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
+        AndroidThreeTen.init(this)
 
         startKoin {
             AndroidLogger()
@@ -24,6 +25,5 @@ class SimpleBudgetApplication:Application(){
             // declare modules
             modules(appModule)
         }
-        AndroidThreeTen.init(this)
     }
 }

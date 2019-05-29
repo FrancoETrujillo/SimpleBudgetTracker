@@ -1,1 +1,5 @@
 include ':app'
+include ':MPChartLib'
+//include ':MPChartLib-Realm'
+project(':MPChartLib').projectDir = new File('../MPChartLib')
+

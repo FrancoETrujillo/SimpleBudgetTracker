@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mvatech.ftrujillo.simplebudgeting.utils.DiffUtilImpl
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
+import java.math.BigDecimal
 
 class CategoriesListAdapter(private val categoryStats: MutableList<CategoryStats>) : RecyclerView.Adapter<CategoriesListAdapter.Holder>() {
 

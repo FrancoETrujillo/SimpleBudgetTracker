@@ -13,12 +13,15 @@ import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.SpendingGoal
 import com.mvatech.ftrujillo.simplebudgeting.mocks.getMockedCategoryList
 import com.mvatech.ftrujillo.simplebudgeting.new_transaction.viewmodel.NewTransactionViewModel
+import com.mvatech.ftrujillo.simplebudgeting.utils.CurrencyTextWatcher
 import com.mvatech.ftrujillo.simplebudgeting.utils.toast
 import kotlinx.android.synthetic.main.new_transaction_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 
 
 class NewTransactionFragment : Fragment() {
@@ -45,9 +48,14 @@ class NewTransactionFragment : Fragment() {
     }
 
     private fun initInitialState() {
-        setVisibility(titleCheckBox.isChecked, titleEditText)
-        setVisibility(todayCheckBox.isChecked, dateEditText)
+        checkAndEnable(noteCheckBox.isChecked, noteEditText)
+        checkAndEnable(todayCheckBox.isChecked, dateEditText)
+        date = LocalDateTime.now().with(LocalTime.of(0,0))
         setDateEditText()
+
+        todayDate.text = LocalDate.now().format(
+            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+        )
     }
 
     private fun fillCategories() {
@@ -60,8 +68,9 @@ class NewTransactionFragment : Fragment() {
 
     private fun bindListeners() {
         addFavButton.setOnClickListener(onFavButtonClick)
-        titleCheckBox.setOnCheckedChangeListener(onUntitledCheckBoxChanged)
+        noteCheckBox.setOnCheckedChangeListener(onUntitledCheckBoxChanged)
         todayCheckBox.setOnCheckedChangeListener(onTodayCheckBoxChanged)
+        costEditText?.addTextChangedListener(CurrencyTextWatcher(costEditText))
         dateEditText.onFocusChangeListener = onDateEditTextFocusChangedListener
         dateEditText.setOnClickListener(onDateEditTextClickListener)
         viewModel.categoryList.observe(viewLifecycleOwner, Observer(this::categoryListChanged))
@@ -77,12 +86,9 @@ class NewTransactionFragment : Fragment() {
             DatePickerDialog(it, onDateChangedListener, year, month, day)}
         datePickerDialog?.show()
     }
-    private fun setVisibility(isChecked: Boolean, view: View){
-        if(isChecked){
-            view.visibility = View.GONE
-        } else {
-            view.visibility = View.VISIBLE
-        }
+
+    private fun checkAndEnable(isChecked: Boolean, view: View){
+        view.isEnabled = !isChecked
     }
 
     private fun categoryListChanged(categoryList: List<Category>){
@@ -91,18 +97,22 @@ class NewTransactionFragment : Fragment() {
 
     private fun currentGoalChanged(currentGoalInfo:SpendingGoal?){
         currentGoalInfo?.let {
-            goalStatus.maxSpeed = currentGoalInfo?.currentGoal.toFloat()
-            goalStatus.setSpeedAt(currentGoalInfo?.currentRemaining.toFloat())
+            val chart = goalStatusChart
+            chart.data = viewModel.generatePieChartData(it)
+            chart.centerText = "Remaining: \n$${currentGoalInfo.currentRemaining} / $${currentGoalInfo.currentGoal}"
+            chart.maxAngle = 180f
+            chart.rotationAngle = 180f
+            chart.isRotationEnabled = false
+            chart.setExtraOffsets(0f,0f,0f, -100f)
         }
-
-
     }
 
+
     private val onFavButtonClick = View.OnClickListener {
-        val cost = costEditText.text.toString().toBigDecimal()
+        val cost = CurrencyTextWatcher.cleanCurrencyText(costEditText.text.toString())
         val category = categorySpinner.selectedItem as Category
-        val title = titleEditText.text.toString()
-        val titleChecked = if(titleCheckBox.isChecked) "Untitled" else title
+        val title = noteEditText.text.toString()
+        val titleChecked = if(noteCheckBox.isChecked) "Untitled" else title
         if(cost.toFloat() != 0f){
             "Saved".toast(this.context)
             viewModel.saveNewTransaction(cost,category,date,titleChecked)
@@ -122,23 +132,24 @@ class NewTransactionFragment : Fragment() {
     }
 
     private val onTodayCheckBoxChanged = CompoundButton.OnCheckedChangeListener{ _, isChecked ->
-        setVisibility(isChecked, dateEditText)
-        setDateEditText()
+        checkAndEnable(isChecked, dateEditText)
+        if(todayCheckBox.isChecked) {
+            date = LocalDateTime.now().with(LocalTime.of(0,0))
+
+        }
+            setDateEditText()
     }
 
     private fun setDateEditText() {
-        if(!todayCheckBox.isChecked) {
             dateEditText.showSoftInputOnFocus = false
             val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy")
             val dateString = date.format(formatter)
             dateEditText.setText(dateString)
-        } else {
-            date = LocalDateTime.now().with(LocalTime.of(0,0))
-        }
+
     }
 
     private val onUntitledCheckBoxChanged = CompoundButton.OnCheckedChangeListener{_, isChecked ->
-        setVisibility(isChecked, titleEditText)
+        checkAndEnable(isChecked, noteEditText)
     }
 
     private val onDateChangedListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->

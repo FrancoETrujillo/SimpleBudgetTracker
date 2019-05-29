@@ -6,7 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "categories_table", indices = [Index( value = ["color"], unique = true)])
 data class Category(
-    val name:String,
     @PrimaryKey(autoGenerate = false )
-    val color: Int
+    val color: Int,
+    val name:String,
+    val enabled: Boolean = true
 )
+

@@ -12,10 +12,6 @@ import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.OverViewViewModel
 
 class OverViewFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = OverViewFragment()
-    }
-
     private lateinit var viewModel: OverViewViewModel
 
     override fun onCreateView(
@@ -28,7 +24,6 @@ class OverViewFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(OverViewViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Simple Budgeting</string>
+    <string name="app_name">Where is my money</string>
     <string name="new_transaction">New</string>
     <string name="stats">Stats</string>
     <string name="settings">Settings</string>
@@ -11,7 +11,8 @@
     <string name="category_color">Category color</string>
     <string name="category_name">Category Name</string>
     <string name="spent">$ Spent</string>
-    <string name="zero">0</string>
-    <string name="untitled">Untitled</string>
+    <string name="zero">$0.00</string>
+    <string name="note">Note</string>
     <string name="spending_stats">Spending Stats</string>
+    <string name="todayDate">Today\'s</string>
 </resources>

@@ -14,10 +14,9 @@ import com.mvatech.ftrujillo.simplebudgeting.utils.LocaLDateTimeConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 const val DATABASE_NAME = "simpleBudget.db"
-@Database(entities = [Transaction::class, Category::class, SpendingGoal::class], version = 1, exportSchema = false)
+@Database(entities = [Transaction::class, Category::class, SpendingGoal::class], version = 2, exportSchema = false)
 @TypeConverters(LocaLDateTimeConverter::class, BigDecimalConverter::class)
 abstract class SimpleBudgetDatabase: RoomDatabase() {
 
@@ -35,19 +34,22 @@ abstract class SimpleBudgetDatabase: RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(context.applicationContext,
             SimpleBudgetDatabase::class.java, DATABASE_NAME).fallbackToDestructiveMigration()
-            .addCallback(object : Callback(){
-                override fun onCreate(db: SupportSQLiteDatabase) {
-                    super.onCreate(db)
-                    GlobalScope.launch(Dispatchers.IO) {
-                        INSTANCE?.let { populateCategories(it.categoriesDao, it.spendingGoalDao) }
-                    }
-                }
-            })
+            .fallbackToDestructiveMigration()
+//            .addCallback(object : Callback(){
+//                override fun onCreate(db: SupportSQLiteDatabase) {
+//                    super.onCreate(db)
+//                    GlobalScope.launch(Dispatchers.IO) {
+//                        INSTANCE?.let { //populateCategories(it.categoriesDao, it.spendingGoalDao)
+//                             }
+//                    }
+//                }
+//            }
+//            )
             .build()
 
-        private fun populateCategories(categoriesDao: CategoriesDao, spendingGoalDao: SpendingGoalDao){
-            categoriesDao.insertCategoriesList(defaultCategoriesDao)
-            spendingGoalDao.insertSpendingGoal(defaultSpendingGoal)
-        }
+//        private fun populateCategories(categoriesDao: CategoriesDao, spendingGoalDao: SpendingGoalDao){
+//            categoriesDao.insertCategoriesList(defaultCategoriesDao)
+//            spendingGoalDao.insertSpendingGoal(defaultSpendingGoal)
+//        }
     }
 }

@@ -12,10 +12,6 @@ import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.TransactionsDetailV
 
 class TransactionsDetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = TransactionsDetailFragment()
-    }
-
     private lateinit var viewModel: TransactionsDetailViewModel
 
     override fun onCreateView(

@@ -7,10 +7,10 @@ import java.math.BigDecimal
 
 fun getMockedCategoryList(): List<Category>{
     val categoryList = mutableListOf<Category>()
-    categoryList.add(Category("Food", Color.BLUE))
-    categoryList.add(Category("Drinks", Color.RED))
-    categoryList.add(Category("School", Color.YELLOW))
-    categoryList.add(Category("Transportation", Color.GREEN))
+    categoryList.add(Category(Color.BLUE,"Food"))
+    categoryList.add(Category(Color.RED, "Drinks"))
+    categoryList.add(Category(Color.YELLOW, "School"))
+    categoryList.add(Category(Color.GREEN, "Transportation"))
 
     return categoryList
 }
