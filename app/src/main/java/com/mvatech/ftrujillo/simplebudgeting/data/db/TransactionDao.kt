@@ -25,5 +25,8 @@ interface TransactionDao{
     @Query("SELECT * FROM transaction_table WHERE id = :id")
     fun getTransactionById(id: Long):LiveData<Transaction>
 
+    @Query("SELECT * FROM transaction_table WHERE categoryColorId = :categoryId")
+    fun getTransactionByCategory(categoryId:Int):LiveData<List<Transaction>>
+
 
 }

@@ -1,17 +1,20 @@
-package com.mvatech.ftrujillo.simplebudgeting.stats.ui
+package com.mvatech.ftrujillo.simplebudgeting.stats.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mvatech.ftrujillo.simplebudgeting.utils.DiffUtilImpl
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
-import java.math.BigDecimal
+import com.mvatech.ftrujillo.simplebudgeting.stats.ui.StatsFragmentDirections
+import com.mvatech.ftrujillo.simplebudgeting.utils.inflate
+import com.mvatech.ftrujillo.simplebudgeting.utils.toast
+import kotlinx.android.synthetic.main.category_stat_item.view.*
 
 class CategoriesListAdapter(private val categoryStats: MutableList<CategoryStats>) : RecyclerView.Adapter<CategoriesListAdapter.Holder>() {
 
@@ -27,9 +30,7 @@ class CategoriesListAdapter(private val categoryStats: MutableList<CategoryStats
         result.dispatchUpdatesTo(this)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.category_stat_item, parent, false)
-        return Holder(view)
+        return Holder(parent.inflate(R.layout.category_stat_item,false))
     }
 
     override fun getItemCount() = categoryStats.count()
@@ -39,22 +40,24 @@ class CategoriesListAdapter(private val categoryStats: MutableList<CategoryStats
     }
 
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val totalSpent:TextView = itemView.findViewById(R.id.totalSpent)
-        private val categoryName:TextView = itemView.findViewById(R.id.categoryName)
-        private val categoryColor:ImageView = itemView.findViewById(R.id.categoryColor)
-
+    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
+        lateinit var stat: CategoryStats
 
         fun bind(stat: CategoryStats){
+            this.stat = stat
             val totalSpentText =  "$" + stat.totalSpent
-            totalSpent.text =totalSpentText
+            itemView.totalSpent.text =totalSpentText
+            itemView.categoryName.text = stat.categoryName
+            itemView.categoryColor.setColorFilter(stat.categoryColor)
+        }
 
-            categoryName.text = stat.categoryName
-
-            categoryColor.setColorFilter(stat.categoryColor)
-            itemView.setOnClickListener{
-                Toast.makeText(it.context, "${stat.categoryName} was clicked", Toast.LENGTH_SHORT).show()
-            }
+        override fun onClick(v: View) {
+            val action =
+                StatsFragmentDirections.statsActionDetail(stat.categoryColor)
+            Navigation.findNavController(itemView).navigate(action)
         }
     }
 

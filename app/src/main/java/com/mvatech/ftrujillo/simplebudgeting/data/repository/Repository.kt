@@ -16,4 +16,5 @@ interface Repository{
     fun getCurrentRemainingBlocking():BigDecimal
     fun getCurrentSpent():BigDecimal
     fun getCurrentGoal():BigDecimal
+    fun getTransactionsByCategory(categoryId: Int): LiveData<List<Transaction>>
 }

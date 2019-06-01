@@ -59,10 +59,12 @@ class NewTransactionFragment : Fragment() {
     }
 
     private fun fillCategories() {
-        categorySpinnerAdapter = CategorySpinnerAdapter(
-            context,
-            getMockedCategoryList()
-        )
+        context?.let {
+            categorySpinnerAdapter = CategorySpinnerAdapter(
+                it,
+                getMockedCategoryList()
+            )
+        }
         categorySpinner.adapter = categorySpinnerAdapter
     }
 
@@ -135,7 +137,6 @@ class NewTransactionFragment : Fragment() {
         checkAndEnable(isChecked, dateEditText)
         if(todayCheckBox.isChecked) {
             date = LocalDateTime.now().with(LocalTime.of(0,0))
-
         }
             setDateEditText()
     }

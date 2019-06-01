@@ -16,6 +16,7 @@ import com.mvatech.ftrujillo.simplebudgeting.utils.getList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDateTime
 import timber.log.Timber
 import java.math.BigDecimal
@@ -71,10 +72,15 @@ class RepositoryImpl(private val transactionDao: TransactionDao,
         return categoriesDao.getCategoryList()
     }
 
+    override fun getTransactionsByCategory(categoryId: Int):LiveData<List<Transaction>> {
+        return transactionDao.getTransactionByCategory(categoryId)
+    }
     override suspend fun saveNewTransaction(transaction:Transaction){
-        preferenceProvider.updateCurrentSpent(transaction.price)
-        transactionDao.insertTransaction(transaction)
-        updateSpendingGoalInfo()
+        withContext(Dispatchers.IO){
+            preferenceProvider.updateCurrentSpent(transaction.price)
+            transactionDao.insertTransaction(transaction)
+            updateSpendingGoalInfo()
+        }
     }
 
     override fun getCurrentSpent(): BigDecimal {
@@ -88,10 +94,6 @@ class RepositoryImpl(private val transactionDao: TransactionDao,
     private fun initializeDefaults() {
         GlobalScope.launch(Dispatchers.IO) {
             val defaultCategories = preferenceProvider.getDefaultCategories()
-//            val set = HashMap<Int,Category>()
-//            defaultCategories.map { category ->
-//                set.put(category.color, category)
-//            }
             Timber.d("Franco initializing.... %s", defaultCategories)
             categoriesDao.insertCategoriesList(defaultCategories)
             preferenceProvider.setFirstLaunch()

@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.Category
 
-class CategorySpinnerAdapter(context: Context?, categoryList: List<Category>): ArrayAdapter<Category>(context, 0, categoryList){
+class CategorySpinnerAdapter(context: Context, categoryList: List<Category>): ArrayAdapter<Category>(context, 0, categoryList){
 
     fun updateCategories(categoryList: List<Category>){
         clear()
@@ -32,10 +32,10 @@ class CategorySpinnerAdapter(context: Context?, categoryList: List<Category>): A
 
         val colorView = convertedView.findViewById<ImageView>(R.id.categoryColor)
         val categoryName = convertedView.findViewById<TextView>(R.id.categoryName)
-        val currentItem = getItem(position)
-        colorView.setColorFilter(currentItem.color)
-        categoryName.text = currentItem.name
-
+        getItem(position)?.let {
+            colorView.setColorFilter(it.color)
+            categoryName.text = it.name
+        }
         return convertedView
     }
 

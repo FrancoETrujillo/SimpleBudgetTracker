@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mvatech.ftrujillo.simplebudgeting.R
 import com.mvatech.ftrujillo.simplebudgeting.data.domain.CategoryStats
+import com.mvatech.ftrujillo.simplebudgeting.stats.ui.adapters.CategoriesListAdapter
 import com.mvatech.ftrujillo.simplebudgeting.stats.viewmodel.StatsViewModel
 import kotlinx.android.synthetic.main.stats_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -61,4 +62,6 @@ class StatsFragment : Fragment() {
         chart.description.text = ""
         chart.centerText = "$${viewModel.currentSpent} / $${viewModel.currentGoal}"
     }
+
+
 }

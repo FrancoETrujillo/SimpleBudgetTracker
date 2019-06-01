@@ -16,6 +16,7 @@ class StatsViewModel(private val repository: Repository) : ViewModel() {
     val statsList:LiveData<List<CategoryStats>> = repository.categoryStatsList
     val currentSpent = repository.getCurrentSpent()
     val currentGoal = repository.getCurrentGoal()
+
     fun generatePieChartData(categoryStatList: List<CategoryStats>):PieData{
 
         val colors = ArrayList<Int>()

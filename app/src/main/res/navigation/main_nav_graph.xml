@@ -9,9 +9,17 @@
               android:label="new_transaction_fragment" tools:layout="@layout/new_transaction_fragment"/>
 
     <fragment android:id="@+id/statsFragment" android:name="com.mvatech.ftrujillo.simplebudgeting.stats.ui.StatsFragment"
-              android:label="stats_fragment" tools:layout="@layout/stats_fragment"/>
+              android:label="stats_fragment" tools:layout="@layout/stats_fragment">
+        <action android:id="@+id/statsActionDetail"
+                app:destination="@+id/transactionsDetailFragment" app:enterAnim="@anim/nav_default_enter_anim"/>
+    </fragment>
 
     <fragment android:id="@+id/settingsFragment"
               android:name="com.mvatech.ftrujillo.simplebudgeting.settings.SettingsFragment"
               android:label="SettingsFragment"/>
+    <fragment android:id="@+id/transactionsDetailFragment"
+              android:name="com.mvatech.ftrujillo.simplebudgeting.stats.ui.TransactionsDetailFragment"
+              android:label="transactions_detail_fragment" tools:layout="@layout/transactions_detail_fragment">
+        <argument android:name="CategoryInfo" app:argType="integer"/>
+    </fragment>
 </navigation>
